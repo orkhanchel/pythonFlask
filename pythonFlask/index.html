@@ -1,0 +1,33 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Online Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="products-list"></div>
+
+    <script>
+        // Получаем данные с бэкенда при загрузке страницы
+        fetch('/api/products')
+            .then(response => response.json())
+            .then(products => {
+                const productsList = document.getElementById('products-list');
+                // Создаем элементы для каждого товара и добавляем их на страницу
+                products.forEach(product => {
+                    const productElement = document.createElement('div');
+                    productElement.innerHTML = `
+                        <h2>${product.name}</h2>
+                        <p>${product.description}</p>
+                        <p>Price: $${product.price}</p>
+                    `;
+                    productsList.appendChild(productElement);
+                });
+            });
+    </script>
+</body>
+</html>
